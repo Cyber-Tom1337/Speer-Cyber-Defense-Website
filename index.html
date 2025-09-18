@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Speer Cyber Defense</title>
+<style>
+
+:root{
+  --bg: #0b0b0c;
+  --bg-2: #0f0f11;
+  --fg: #f3f3f3;
+  --muted: #b8b8b8;
+  --line: #222;
+  --card: #111113;
+  --accent: #ffffff;
+  --glow: 0 0 25px rgba(255,255,255,0.06);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--fg);
+  background:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px) 0 0/100% 3px,
+    radial-gradient(circle at 25% 20%, rgba(255,255,255,0.04), transparent 60%),
+    repeating-linear-gradient( 60deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 10px),
+    repeating-linear-gradient(-60deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 10px),
+    var(--bg);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  line-height:1.6;
+}
+
+nav{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  
+  background:#000;
+  border-bottom: 1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 12px 24px;
+  box-shadow: var(--glow);
+}
+nav .logo{ display:flex; gap:12px; align-items:center; }
+nav .logo img{height:53px; width:auto; filter:grayscale(1) contrast(1.15) brightness(1.15)}
+nav .logo .brand{
+  font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--fg); font-size:14px;
+}
+nav .nav-items a{
+  color:var(--fg);
+  text-decoration:none;
+  margin-left: 22px;
+  font-weight:500;
+  position:relative;
+  padding: 6px 2px;
+}
+nav .nav-items a::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:-4px; height:1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: scaleX(0);
+  transform-origin: 50% 50%;
+  transition: transform .25s ease;
+}
+nav .nav-items a:hover::after, nav .nav-items a[aria-current="page"]::after{ transform: scaleX(1); }
+
+section.hero{
+  display:flex; align-items:center; justify-content:center;
+  min-height: calc(100vh - 72px);
+  padding: 64px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.hero .hero-container{
+  width:min(1100px, 92vw);
+  display:grid; grid-template-columns: 1.2fr .8fr; gap:40px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border:1px solid var(--line);
+  border-radius: 18px;
+  padding: 40px;
+  box-shadow: var(--glow);
+}
+@media (max-width: 900px){
+  .hero .hero-container{ grid-template-columns: 1fr; }
+}
+
+.hero h1{
+  margin:0 0 12px;
+  font-size: clamp(28px, 5vw, 56px);
+  line-height:1.1;
+  font-weight:800;
+  letter-spacing: .02em;
+}
+.hero p{
+  margin: 10px 0 22px; color: var(--muted); font-size: clamp(15px, 2vw, 18px);
+}
+
+.hero .card{
+  background: linear-gradient(180deg, #0f0f10, #0d0d0e);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: var(--glow);
+}
+.hero .card h3{ margin: 0 0 10px; font-weight:700; letter-spacing:.04em; }
+.hero .card p{ margin: 8px 0; color: var(--muted); }
+
+.btn-row{ display:flex; gap:14px; flex-wrap:wrap; }
+.btn{
+  appearance:none; border:1px solid var(--fg);
+  background: transparent; color: var(--fg);
+  padding: 10px 16px; border-radius: 10px; font-weight:700; letter-spacing:.04em;
+  text-decoration:none; display:inline-flex; align-items:center; gap:10px;
+  transition: transform .08s ease, background .25s ease, color .25s ease;
+}
+.btn:hover{ background:#fff; color:#000; }
+.btn:active{ transform: translateY(1px); }
+.btn.alt{ border-color:#999; color:#ddd; }
+.btn.alt:hover{ background:#eee; color:#000; }
+
+.hero img{
+  width:100%; height:auto; border-radius:12px; border:1px solid var(--line);
+  filter: grayscale(1) contrast(1.1) brightness(1.05);
+  mix-blend-mode: lighten;
+}
+
+section.hero[data-route]{ display:none; }
+section.hero[data-route].active{ display:block; }
+
+.hero::before, .hero::after{
+  content:"";
+  position:absolute; inset:auto auto 6% -6%;
+  width: 45vmax; height:45vmax;
+  background:
+    conic-gradient(from 0turn, rgba(255,255,255,0.07) 0 6deg, transparent 6deg 360deg);
+  filter: blur(60px);
+  transform: rotate(20deg);
+  opacity:.25;
+  pointer-events:none;
+}
+.hero::after{
+  inset: -10% -10% auto auto;
+  transform: rotate(-15deg);
+  opacity:.15;
+}
+
+footer{
+  padding: 34px 20px; text-align:center; color: #9a9a9a; border-top:1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+  font-size:14px;
+}
+
+ul{ padding-left: 18px; }
+code,kbd,pre{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+pre{
+  background:#0f0f10; border:1px solid var(--line); padding:14px; border-radius:10px; overflow:auto;
+}
+hr{ border:0; height:1px; background: linear-gradient(90deg, transparent, #333, transparent); margin: 24px 0; }
+
+
+/* --- Minimal additions: button & LinkedIn pill styles --- */
+.btn{
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--fg);
+  background: transparent;
+  color: var(--fg);
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform .08s ease, background .25s ease, color .25s ease, box-shadow .25s ease;
+  box-shadow: 0 0 0 0 rgba(255,255,255,0);
+  isolation: isolate;
+}
+.btn::before{
+  content:"";
+  position:absolute; inset: 0;
+  background: radial-gradient(circle at 10% 0%, rgba(255,255,255,0.15), transparent 40%);
+  opacity:0; transition: opacity .25s ease;
+  z-index:-1;
+}
+.btn:hover{ background:#fff; color:#000; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
+.btn:hover::before{ opacity:1; }
+.btn:active{ transform: translateY(1px); }
+.btn-primary{ border-color:#fff; }
+.btn-ghost{ border-color:#aaa; color:#ddd; }
+.btn-ghost:hover{ background:#eaeaea; color:#000; }
+
+.link-pill{
+  display:inline-flex; align-items:center; gap:10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px dashed #999;
+  color:#e6e6e6; text-decoration:none;
+  transition: border-color .25s ease, background .25s ease, color .25s ease, transform .08s ease;
+}
+.link-pill::before{
+  content:"in";
+  display:inline-grid; place-items:center;
+  width:22px; height:22px; border-radius:6px; font-weight:900; font-size:12px;
+  background:#fff; color:#000;
+}
+.link-pill:hover{ background:#111; border-color:#fff; color:#fff; }
+.link-pill:active{ transform: translateY(1px); }
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">
+    <img src="SCDLOGOweb.jpg" alt="Speer Cyber Defense logo">
+    </div>
+  <div class="nav-items">
+    <a href="index.html" data-route="home">Home</a>
+    <a href="about.html" data-route="about">About</a>
+    <a href="contact.html" data-route="contact">Contact</a>
+  </div>
+</nav>
+<section class="hero active" data-route="home">
+      <div class="hero-container">
+        <div class="column-left">
+          <h1>Secure Your Online Presence</h1>
+          <p>
+            </br>At the cutting edge of cybersecurity technology, our advanced AI-powered suite of automation tools offers unparalleled penetration testing capabilities.</br></br></br> <strong>Unmatched Vulnerability Detection:</strong> We uncover vulnerabilities that many others overlook, ensuring that your systems are secured against even the most elusive threats.
+</br></br><strong> Large Scope, Real-Time Coverage:</strong> Our tools can scan and monitor hundreds of sites simultaneously, giving you comprehensive protection across your entire online infrastructure.
+</br></br><strong>24/7 Vigilance:</strong> Security doesn't sleep. Our AI fueled network continuously monitors your systems, ensuring that potential risks are identified and reported around the clock.
+
+          </p>
+		  </br></br>
+		  <a href="#about" class="btn btn-primary">Learn More</a>
+        </div>
+        <div class="column-right">
+          
+        </div>
+      </div>
+    </section>
+<section class="hero" data-route="about">
+      <div class="hero-container">
+        <div class="column-middle">
+          <h1>About Us</h1>
+          <p>
+		  </br>
+		  <strong>Our Mission</strong></br>
+            At Speer Cyber Defense, we are dedicated to delivering the highest quality cybersecurity services while empowering you to enhance your online safety practices. To identify and resolve security vulnerabilities, we utilize the most advanced software available and are continuously developing our own custom tools to meet evolving needs.
+			</br></br>
+			If you’re interested in our services or tools, feel free to contact us. We are well equipped to address all of your cybersecurity needs efficiently and effectively.
+			</br></br><a href="#contact" class="btn btn-ghost">Contact Us</a>
+          </p>
+          
+        </div>
+        
+      </div>
+    </section>
+<section class="hero" data-route="contact">
+      <div class="hero-container">
+        <div class="column-left">
+          <h1>Contact Us</h1>
+		  <strong>
+		  thomas@speer.ai</br></br>
+		  7272409660</br>
+		  </br><a href="https://www.linkedin.com/company/speer-cyber-defense/" class="btn btn-primary">Our Linkedin</a></br>
+		  </strong>
+        </div>
+        
+      </div>
+    </section>
+<footer>© 2025 Speer Cyber Defense · AI & Cybersecurity</footer>
+
+<script>
+(function() {
+  const routes = {
+    "home": "index.html",
+    "about": "about.html",
+    "contact": "contact.html"
+  };
+
+  const sections = Array.from(document.querySelectorAll('section.hero[data-route]'));
+  const links = Array.from(document.querySelectorAll('nav .nav-items a[data-route]'));
+
+  function setActive(route) {
+    sections.forEach(s => s.classList.toggle('active', s.getAttribute('data-route') === route));
+    links.forEach(a => a.setAttribute('aria-current', a.getAttribute('data-route') === route ? 'page' : 'false'));
+  }
+
+  function routeFromHashOrPath() {
+    const hash = (location.hash || '').replace('#','').trim();
+    if (hash && routes[hash]) return hash;
+    const path = location.pathname.toLowerCase();
+    for (const [r, f] of Object.entries(routes)) {
+      if (path.endsWith('/' + f) || path.endsWith(f)) return r;
+    }
+    return 'home';
+  }
+
+  function navigate(route, pushHash=true) {
+    if (!routes[route]) route = 'home';
+    setActive(route);
+    if (pushHash) location.hash = route;
+  }
+
+  links.forEach(a => {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      navigate(a.getAttribute('data-route'));
+    });
+  });
+
+  window.addEventListener('hashchange', () => navigate(routeFromHashOrPath(), false));
+  navigate(routeFromHashOrPath(), false);
+})();
+</script>
+
+</body>
+</html>
