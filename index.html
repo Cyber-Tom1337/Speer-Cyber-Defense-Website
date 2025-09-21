@@ -212,6 +212,38 @@ hr{ border:0; height:1px; background: linear-gradient(90deg, transparent, #333, 
 }
 .link-pill:hover{ background:#111; border-color:#fff; color:#fff; }
 .link-pill:active{ transform: translateY(1px); }
+
+/* --- Specific image fixes --- */
+.column-right{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.column-right img{
+  width:450px !important;
+  height:283px !important;
+  filter: invert(1);
+  border:none !important;
+  display:block;
+}
+
+/* ===== Mobile enhancements (no content/structure changes) ===== */
+@media (max-width: 600px){
+  nav{ padding: 10px 14px; }
+  nav .nav-items a{ margin-left: 14px; font-size: 14px; }
+
+  .hero{ padding: 36px 14px; }
+  .hero .hero-container{
+    padding: 20px;
+    gap: 20px;
+  }
+
+  /* Make images scale gracefully on small screens, up to 250px */
+  .column-right img{
+    width: min(250px, 70vw) !important;
+    height: auto !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -239,13 +271,13 @@ hr{ border:0; height:1px; background: linear-gradient(90deg, transparent, #333, 
 		  <a href="#about" class="btn btn-primary">Learn More</a>
         </div>
         <div class="column-right">
-          
+          <img src="video.png" alt="Video card">
         </div>
       </div>
     </section>
 <section class="hero" data-route="about">
       <div class="hero-container">
-        <div class="column-middle">
+        <div class="column-left">
           <h1>About Us</h1>
           <p>
 		  </br>
@@ -255,9 +287,10 @@ hr{ border:0; height:1px; background: linear-gradient(90deg, transparent, #333, 
 			If you’re interested in our services or tools, feel free to contact us. We are well equipped to address all of your cybersecurity needs efficiently and effectively.
 			</br></br><a href="#contact" class="btn btn-ghost">Contact Us</a>
           </p>
-          
         </div>
-        
+        <div class="column-right">
+          <img src="circuit.png" alt="Memory card">
+        </div>
       </div>
     </section>
 <section class="hero" data-route="contact">
